@@ -11,18 +11,24 @@ class TreeNode {
     }
 }
 public class LowestCommonAncestor {
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null || root == p || root == q) {
+    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) {
+            return null;
+        }
+
+        if(root == p || root == q) {
             return root;
         }
 
-        TreeNode left = lowestCommonAncestor(root.left, p, q);
-        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        TreeNode leftFound = lowestCommonAncestor(root.left, p, q);
+        TreeNode rightFound = lowestCommonAncestor(root.right, p, q);
 
-        if (left != null && right != null) {
-            return root; // If p and q are found in different subtrees, root is their LCA.
+        if(leftFound == null) {
+            return rightFound;
+        } else if(rightFound == null) {
+            return leftFound;
+        } else {
+            return root;
         }
-
-        return left != null ? left : right; // Return the non-null subtree.
-    }
+}
 }
